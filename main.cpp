@@ -1,4 +1,5 @@
 #include "ChipProduct.h"
+#include "ChipProductList.h"
 #include <iostream>
 #include <iomanip>
 #include <cmath>
@@ -13,28 +14,85 @@ using namespace std;
 
 
 int main() {
-    // test one
-    ChipProduct chip1;
-    chip1.setBrand("Cheetos");
-    chip1.setFlavor("Flaming Hot");
-    chip1.setPrice(3.99);
-    cout << chip1 << endl << endl;
+    ChipProductList myChipInventory;
+    int choice;
 
-    // test two
-    cout << chip1.getBrand() << endl;
-    cout << chip1.getFlavor() << endl;
-    cout << chip1.getPrice() << endl << endl;
+    while (choice != 5){
+        cout << "-----------Chip Product Inventory-----------" << endl;
+        cout << "1. Add New Chip Products" << endl;
+        cout << "2. Delete Chip Products" << endl;
+        cout << "3. Edit Chip Products" << endl;
+        cout << "4. Show All Chip Products" << endl;
+        cout << "5. Exit" << endl;
+        cout << "--------------------------------------------" << endl;
+        cin >> choice;
 
-    //test 3
-    ChipProduct chip2("Fritos", "Regular", 6.99);
-    cout << chip2 << endl << endl;
+        switch (choice){
+            case 1: {
+                string brand, flavor;
+                double price;
+                cout << "\nEnter Brand: ";
+                cin >> brand;
+                cout << "\nEnter Flavor: ";
+                cin >> flavor;
+                cout << "\nEnter Price: $";
+                cin >> price;
+                ChipProduct newChip(brand, flavor, price);
+                myChipInventory.addProduct(newChip);
+                break;
+            }
+            case 2: {
+                string brandDelete, flavorDelete;
+                cout << "Enter brand of product that you want to delete: ";
+                cin >> brandDelete;
+                cout << "Enter flavor of product that you want to delete: ";
+                cin >> flavorDelete;
+                if (!myChipInventory.deleteProduct(brandDelete, flavorDelete)) {
 
-    //test 4
-    ChipProduct chip3("Lays", "Regular", 6.99);
-    ChipProduct chip4("Doritos", "Nacho Cheese", 10.99);
-    ChipProduct chip5("Takis", "Extra Flaming Hot", 2.99);
-    cout << "We have the following items:\n";
-    cout << chip1 << endl << chip2 <<  endl  << chip3<< endl  << chip4<< endl  << chip5;
+                }
+                break;
+            }
+            case 3: {
+                string brandEdit, flavorEdit;
+                string newBrand, newFlavor;
+                int newPrice;
+
+                cout << "Enter brand that you want to edit: ";
+                cin >> brandEdit;
+                cout << "\nEnter flavor that you want to edit: ";
+                cin >> flavorEdit;
+
+                cout << "\nEnter new brand: ";
+                cin >> newBrand;
+                cout << "\nEnter new flavor: ";
+                cin >> newFlavor;
+                cout << "\nEnter Price: $";
+                cin >> newPrice;
+
+                ChipProduct updatedChipDetails(newBrand, newFlavor, newPrice);
+
+                if (!myChipInventory.editProduct(brandEdit, flavorEdit, updatedChipDetails)) {
+                }
+                break;
+            }
+            case 4:{
+                myChipInventory.allProduct();
+                break;
+            }
+            case 5: {
+                cout << "Exiting...Bye!";
+                break;
+            }
+            default:
+                cout << "\n Invalid choice! Pick a number between 1-5";
+
+
+        }
+
+
+
+
+    }
 
 
 
